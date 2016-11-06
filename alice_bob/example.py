@@ -14,7 +14,7 @@ class example(dml.Algorithm):
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
-        
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -50,7 +50,7 @@ class example(dml.Algorithm):
         document describing that invocation event.
         '''
 
-         # Set up the database connection.
+        # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('alice_bob', 'alice_bob')
@@ -67,15 +67,13 @@ class example(dml.Algorithm):
         doc.wasAssociatedWith(get_found, this_script)
         doc.wasAssociatedWith(get_lost, this_script)
         doc.usage(get_found, resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                }
-            )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
+                  })
         doc.usage(get_lost, resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                }
-            )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
+                  })
 
         lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(lost, this_script)
